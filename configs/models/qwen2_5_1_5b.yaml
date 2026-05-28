@@ -1,0 +1,7 @@
+model: Qwen/Qwen2.5-0.5B-Instruct
+host: 0.0.0.0
+port: 8000
+dtype: auto
+gpu_memory_utilization: 0.90
+max_num_seqs: 32
+max_num_batched_tokens: 4096

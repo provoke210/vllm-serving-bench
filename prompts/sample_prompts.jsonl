@@ -1,0 +1,7 @@
+{"prompt":"Explain why continuous batching improves LLM serving throughput."}
+{"prompt":"Compare prefill and decode stages in transformer inference."}
+{"prompt":"Describe how KV cache affects GPU memory usage during generation."}
+{"prompt":"Give three practical methods to reduce P99 latency in an LLM serving system."}
+{"prompt":"Explain the tradeoff between throughput and time to first token."}
+{"prompt":"Summarize what PagedAttention changes compared with a naive KV cache allocator."}
+

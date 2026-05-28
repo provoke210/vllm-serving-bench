@@ -1,0 +1,30 @@
+endpoint: http://127.0.0.1:8000/v1/chat/completions
+model: Qwen/Qwen2.5-0.5B-Instruct
+api_key: EMPTY
+timeout_seconds: 180
+stream: true
+prompt_file: prompts/sample_prompts.jsonl
+system_prompt: You are a concise assistant.
+temperature: 0.0
+top_p: 1.0
+experiments:
+  - name: c1_in128_out128
+    concurrency: 1
+    num_requests: 8
+    input_tokens: 128
+    max_tokens: 128
+  - name: c4_in128_out128
+    concurrency: 4
+    num_requests: 16
+    input_tokens: 128
+    max_tokens: 128
+  - name: c8_in512_out128
+    concurrency: 8
+    num_requests: 24
+    input_tokens: 512
+    max_tokens: 128
+  - name: c8_in512_out512
+    concurrency: 8
+    num_requests: 24
+    input_tokens: 512
+    max_tokens: 512
