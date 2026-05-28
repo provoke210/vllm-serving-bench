@@ -25,6 +25,19 @@ class RequestSpec:
 
 
 def _payload(spec: RequestSpec) -> dict[str, Any]:
+    if spec.endpoint.rstrip("/").endswith("/v1/completions"):
+        prompt = spec.user_prompt
+        if spec.system_prompt:
+            prompt = f"{spec.system_prompt}\n\n{prompt}"
+        return {
+            "model": spec.model,
+            "prompt": prompt,
+            "max_tokens": spec.max_tokens,
+            "temperature": spec.temperature,
+            "top_p": spec.top_p,
+            "stream": spec.stream,
+        }
+
     messages: list[dict[str, str]] = []
     if spec.system_prompt:
         messages.append({"role": "system", "content": spec.system_prompt})
@@ -65,8 +78,11 @@ async def request_completion(client: httpx.AsyncClient, spec: RequestSpec) -> Re
                     if ttft is None:
                         ttft = time.perf_counter() - start
                     chunk = json.loads(data)
-                    delta = chunk["choices"][0].get("delta", {})
-                    output_text.append(delta.get("content") or "")
+                    choice = chunk["choices"][0]
+                    if "delta" in choice:
+                        output_text.append(choice["delta"].get("content") or "")
+                    else:
+                        output_text.append(choice.get("text") or "")
             latency = time.perf_counter() - start
             return RequestMetrics(
                 experiment=spec.experiment,
@@ -80,7 +96,11 @@ async def request_completion(client: httpx.AsyncClient, spec: RequestSpec) -> Re
         response.raise_for_status()
         latency = time.perf_counter() - start
         body = response.json()
-        content = body["choices"][0]["message"].get("content") or ""
+        choice = body["choices"][0]
+        if "message" in choice:
+            content = choice["message"].get("content") or ""
+        else:
+            content = choice.get("text") or ""
         usage_tokens = body.get("usage", {}).get("completion_tokens")
         return RequestMetrics(
             experiment=spec.experiment,
@@ -99,4 +119,3 @@ async def request_completion(client: httpx.AsyncClient, spec: RequestSpec) -> Re
             output_tokens=0,
             error=repr(exc),
         )
-
