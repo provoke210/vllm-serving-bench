@@ -88,6 +88,17 @@ Low-VRAM first run:
 .\scripts\run_bench.ps1 -Config configs/experiments/low_vram_qwen2_5_0_5b.yaml -Output reports/low_vram_qwen2_5_0_5b.json
 ```
 
+Qwen2.5-3B run:
+
+```bash
+python -m vllm_serving_bench.cli run \
+  --config configs/experiments/qwen2_5_3b.yaml \
+  --output reports/qwen2_5_3b.json
+python -m vllm_serving_bench.cli report \
+  --input reports/qwen2_5_3b.json \
+  --output reports/qwen2_5_3b.md
+```
+
 ### 4. Generate Markdown Report
 
 ```bash
