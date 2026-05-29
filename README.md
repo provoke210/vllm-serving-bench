@@ -2,7 +2,7 @@
 
 一个面向 AI Infra / LLM Serving 方向的 vLLM 推理服务压测与分析项目。
 
-这个项目的目标不是简单启动 vLLM，而是系统评估 OpenAI-compatible LLM serving 在不同并发、输入长度、输出长度和服务参数下的性能表现，并输出可写进简历的 benchmark report。
+这个项目的目标不是简单启动 vLLM，而是系统评估 OpenAI-compatible LLM serving 在不同并发、输入长度、输出长度和服务参数下的性能表现，并输出 benchmark report。
 
 ## What It Measures
 
@@ -125,11 +125,6 @@ Then expand:
 - test long context impact on TTFT
 - test streaming vs non-streaming
 
-## Resume Angle
-
-可以这样写：
-
-> 基于 vLLM 构建 OpenAI-compatible 大模型推理服务性能评测平台，设计异步压测工具统计 TTFT、TPOT、P99 延迟、tokens/s、错误率与并发扩展性；围绕输入长度、输出长度、并发数、batching 参数和显存利用率进行实验，分析 PagedAttention、continuous batching 与 KV Cache 对服务吞吐和尾延迟的影响。
 
 ## Notes
 
